@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tom & Jerry Friendship World</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font for Cartoon Look -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ================= GLOBAL RESET & THEME ================= */
+*{
+  margin:0; padding:0; box-sizing:border-box; font-family:'Fredoka',sans-serif;
+}
+
+body{
+  background:#0d1b2a; /* Dark cartoon background */
+  color:white;
+  overflow-x:hidden;
+}
+
+/* Cartoon Background Slideshow */
+.bg-slideshow{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background-size:cover;
+  background-position:center;
+  animation:bgChange 25s infinite alternate;
+  filter:brightness(0.45);
+}
+
+@keyframes bgChange{
+  0%{background-image:url('https://wallpaperaccess.com/full/1241971.jpg');}
+  50%{background-image:url('https://wallpaperaccess.com/full/1241965.jpg');}
+  100%{background-image:url('https://wallpaperaccess.com/full/1241975.jpg');}
+}
+
+/* Floating Cartoon Bubbles */
+.bubble{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.3);
+  animation:float 8s infinite linear;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);} to{transform:translateY(-10vh);}  
+}
+
+/* Glassmorphism Main Container */
+.container{
+  max-width:1200px;
+  margin:25px auto;
+  padding:25px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(12px);
+  border-radius:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+  position:relative;
+}
+
+h1{text-align:center;font-size:2.6rem;margin-bottom:10px;color:#ffd93d;}
+h2{text-align:center;margin-top:15px;color:#ff9f1c;}
+p{text-align:center;font-size:1.1rem;}
+
+/* Buttons */
+.btn{
+  display:inline-block;
+  padding:12px 30px;
+  margin-top:15px;
+  background:linear-gradient(45deg,#ff595e,#ffd93d);
+  border:none;
+  border-radius:40px;
+  color:black;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.3s;
+}
+.btn:hover{transform:scale(1.1);}
+
+/* Page System */
+.page{display:none;animation:fadeIn 0.8s ease;}
+.page.active{display:block;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:1rem;
+}
+
+/* Progress Bar */
+.progress-container{
+  position:relative;
+  width:100%;
+  height:30px;
+  background:#111;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:20px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#00f2fe,#4facfe);
+  border-radius:20px;
+  transition:2.5s;
+}
+
+/* Tom & Jerry Running on Progress Bar */
+.cat{
+  position:absolute;
+  bottom:25px;
+  left:0;
+  transition:2.5s linear;
+}
+.cat img{width:90px;}
+
+/* Running Across Whole Website (Fixed Characters) */
+.runner{
+  position:fixed;
+  bottom:10px;
+  width:120px;
+  z-index:999;
+  animation:runAcross 18s linear infinite;
+  transform:  scaleX(1);
+}
+.runner.jerry{bottom:80px;animation-duration:22s;transform:  scaleX(-1);}
+
+@keyframes runAcross{
+  from{left:-150px;}
+  to{left:110%;}
+}
+
+/* Cards Grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
+  margin-top:20px;
+}
+
+.card{
+  background:rgba(0,0,0,0.5);
+  padding:15px;
+  border-radius:18px;
+  text-align:center;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.runner 
+
+.card:hover{transform:scale(1.07);background:rgba(255,255,255,0.15);}
+
+footer{text-align:center;margin-top:15px;font-size:0.9rem;opacity:0.8;}
+</style>
+</head>
+<body>
+
+<div class="bg-slideshow"></div>
+
+<!-- Tom and Jerry Running Across Every Page -->
+<img class="runner tom" src="https://purepng.com/public/uploads/large/purepng.com-jerry-tom-and-jerrytom-and-jerrytomjerryanimated-seriesin-1940characters-1701528659479ztu5y.png" alt="Tom running" > 
+<img class="runner jerry" src="https://raw.githubusercontent.com/anushkaa-02/Tom-JerryGame/refs/heads/main/tom.gif" alt="Jerry running" width="1500" height="150">
+
+<script>
+/* Create floating cartoon bubbles dynamically */
+for(let i=0;i<40;i++){
+  let b=document.createElement('div');
+  b.className='bubble';
+  b.style.left=Math.random()*100+'%';
+  b.style.animationDuration=(Math.random()*5+5)+'s';
+  document.body.appendChild(b);
+}
+</script>
+
+<div class="container">
+
+<!-- PAGE 1: WELCOME PAGE -->
+<div class="page active" id="page1">
+  <h1>🐭 Tom & Jerry Friendship World 🐱</h1>
+  <p>Tom and Jerry fight every day, but they never leave each other. That is the power of TRUE friendship 💙</p>
+  
+  <button class="btn" onclick="nextPage(2)">Enter Friendship World 🚀</button>
+</div>
+
+<!-- PAGE 2: FRIENDSHIP INFO -->
+<div class="page" id="page2">
+  <h1>💞 What is Friendship?</h1>
+  <p>Friendship means fun, trust, memories, fights, and never giving up on each other.</p>
+  <div class="grid">
+    <div class="card">😂 Laugh Together</div>
+    <div class="card">🤝 Help Each Other</div>
+    <div class="card">💬 Share Secrets</div>
+    <div class="card">🎉 Celebrate Life</div>
+  </div>
+  <button class="btn" onclick="nextPage(3)">Next ➡</button>
+</div>
+
+<!-- PAGE 3: NAME INPUT -->
+<div class="page" id="page3">
+  <h1>Enter Friends Names</h1>
+  <input type="text" id="name1" placeholder="Tom (Friend 1 Name)">
+  <input type="text" id="name2" placeholder="Jerry (Friend 2 Name)">
+  <button class="btn" onclick="calculateCompatibility()">Check Friendship Power</button>
+</div>
+
+<!-- PAGE 4: RESULT PAGE -->
+<div class="page" id="page4">
+  <h1>Friendship Result</h1>
+  <p id="resultText"></p>
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="cat" id="cat"><img src="https://media.tenor.com/4eH6u40qCMoAAAAC/tom-and-jerry-run.gif"></div>
+  </div>
+  <p id="desc"></p>
+  <button class="btn" onclick="nextPage(5)">Next ➡</button>
+</div>
+
+<!-- PAGE 5: MINI GAMES PAGE -->
+<div class="page" id="page5">
+  <h1>🎮 Friendship Mini Games</h1>
+  <div class="grid">
+    <div class="card">Truth or Dare</div>
+    <div class="card">Friendship Quiz</div>
+    <div class="card">Memory Match</div>
+    <div class="card">Guess the Emoji</div>
+  </div>
+  <button class="btn" onclick="nextPage(6)">Next ➡</button>
+</div>
+
+<!-- PAGE 6: MEMORY WALL -->
+<div class="page" id="page6">
+  <h1>📸 Friendship Memory Wall</h1>
+  <p>Upload photos and write memories like Tom & Jerry adventures.</p>
+  <input type="file">
+  <textarea placeholder="Write a funny friendship memory..."></textarea>
+  <button class="btn" onclick="nextPage(7)">Next ➡</button>
+</div>
+
+<!-- PAGE 7: CONCLUSION -->
+<div class="page" id="page7">
+  <h1>🌍 Everyone Are Friends in This World</h1>
+  <p>Like Tom & Jerry, friendship never ends ❤️</p>
+  <img src="C://Users//Acer//OneDrive//Pictures//solo.png" width="200" style="display:block;margin:auto;">
+  <button class="btn" onclick="nextPage(1)">Restart 🔄</button>
+</div>
+
+<footer>Made with ❤️ using Tom & Jerry Theme</footer>
+</div>
+
+<script>
+/* Page Navigation Function */
+function nextPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+}
+
+/* Friendship Compatibility Calculator */
+function calculateCompatibility(){
+  const n1=name1.value;
+  const n2=name2.value;
+  if(!n1||!n2){alert('Enter both names');return;}
+
+  const percent=Math.floor(Math.random()*51)+50; // 50% to 100%
+  progressBar.style.width=percent+'%';
+
+  // Scale running cat based on progress bar height
+  const h=document.querySelector('.progress-container').offsetHeight;
+  cat.style.transform='scale('+(h/40)+')';
+
+  // Move cat with progress
+  cat.style.left='calc('+percent+'% - 40px)';
+
+  resultText.innerHTML=n1+' ❤️ '+n2+' = '+percent+'% Friendship';
+  desc.innerText=percent>90?'Best Friends Forever!':percent>70?'Strong Friendship!':'Good Friends!';
+
+  nextPage(4);
+}
+</script>
+
+</body>
+</html>
